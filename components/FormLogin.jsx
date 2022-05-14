@@ -2,19 +2,16 @@ import { useState } from 'react';
 import { Stack, Heading, Input, Button, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
 
 const initialuser = {
-   name: '',
    email: '',
-   password: '',
+   password: ''
 }
 
-export default function FormRegisterUser() {
+export default function Login() {
    const [user, setUser] = useState(initialuser);
-   const [isErrorName, setErrorName] = useState(false);
    const [isErrorEmail, setErrorEmail] = useState(false);
    const [isErrorPassword, setErrorPassword] = useState(false);
 
-   function handleRegisterUser() {
-      user.name === '' && setErrorName(true);
+   function handleLoginUser() {
       user.email === '' && setErrorEmail(true);
       user.password === '' && setErrorPassword(true)
 
@@ -23,23 +20,7 @@ export default function FormRegisterUser() {
 
    return (
       <Stack margin="10" spacing="5">
-         <Heading color="#43A6BC" align="center">Cadastro de usuários</Heading>
-
-         <FormControl isInvalid={isErrorName} align="center">
-            <FormLabel htmlFor='name'>Nome</FormLabel>
-            <Input
-               id='name'
-               type='name'
-               value={user.name}
-               onChange={(e) => {
-                  setUser(prevState => {
-                     return { ...prevState, name: e.target.value }
-                  });
-                  setErrorName(false);
-               }}
-            />
-            {isErrorName && (<FormErrorMessage>O nome é obrigatório</FormErrorMessage>)}
-         </FormControl>
+         <Heading color="#43A6BC" align="center">Login</Heading>
 
          <FormControl isInvalid={isErrorEmail} align="center">
             <FormLabel htmlFor='email'>E-mail</FormLabel>
@@ -73,7 +54,7 @@ export default function FormRegisterUser() {
             {isErrorPassword && (<FormErrorMessage>A senha é obrigatória</FormErrorMessage>)}
          </FormControl>
 
-         <Button isLoading={false} backgroundColor="#B2DDE6" onClick={handleRegisterUser}>Cadastrar</Button>
+         <Button isLoading={false} backgroundColor="#B2DDE6" onClick={handleLoginUser}>Entrar</Button>
       </Stack>
    );
 }
