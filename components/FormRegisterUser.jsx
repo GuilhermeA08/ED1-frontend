@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Stack, Heading, Input, Button, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
+import { Stack, Heading, Input, Button, FormControl, FormLabel, FormErrorMessage, useToast } from '@chakra-ui/react';
+
+import { userRegister } from '../services/userService';
 
 const initialuser = {
    name: '',
@@ -12,6 +14,7 @@ export default function FormRegisterUser() {
    const [isErrorName, setErrorName] = useState(false);
    const [isErrorEmail, setErrorEmail] = useState(false);
    const [isErrorPassword, setErrorPassword] = useState(false);
+   const toast = useToast();
 
    function handleRegisterUser() {
       user.name === '' && setErrorName(true);
@@ -19,6 +22,7 @@ export default function FormRegisterUser() {
       user.password === '' && setErrorPassword(true)
 
       console.log(user);
+      userRegister(user, toast);
    }
 
    return (
