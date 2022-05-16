@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Flex, Stack, Image, Button, Box } from '@chakra-ui/react';
 
 import Link from '../components/Link';
@@ -5,8 +6,10 @@ import Link from '../components/Link';
 import articleLogo from '../public/article-logo.svg';
 import userPhoto from '../public/user-photo.svg';
 
+import { UserContext } from '../contexts/userContext';
+
 export default function MenuBar() {
-   const userAuth = true;
+   const { userAuth } = useContext(UserContext);
 
    return (
       <Flex 
@@ -34,7 +37,7 @@ export default function MenuBar() {
          </Stack>
 
       {
-         userAuth ?
+         userAuth.email != '' ?
          (
             <Stack 
                direction='row' 

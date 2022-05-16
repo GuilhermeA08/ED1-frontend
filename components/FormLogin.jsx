@@ -1,5 +1,9 @@
-import { useState } from 'react';
-import { Stack, Heading, Input, Button, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
+import { useState, useContext } from 'react';
+import { useRouter } from 'next/router'
+import { Stack, Heading, Input, Button, FormControl, FormLabel, FormErrorMessage, useToast } from '@chakra-ui/react';
+
+import { login } from '../services/userService';
+import { UserContext } from '../contexts/userContext';
 
 const initialuser = {
    email: '',
@@ -7,15 +11,26 @@ const initialuser = {
 }
 
 export default function Login() {
+   const router = useRouter();
    const [user, setUser] = useState(initialuser);
    const [isErrorEmail, setErrorEmail] = useState(false);
    const [isErrorPassword, setErrorPassword] = useState(false);
+   const toast = useToast();
+   const { userAuth, setUserAuth } = useContext(UserContext);
 
-   function handleLoginUser() {
+   async function handleLoginUser() {
       user.email === '' && setErrorEmail(true);
-      user.password === '' && setErrorPassword(true)
+      user.password === '' && setErrorPassword(true);
 
-      console.log(user);
+      const userResponse = await login(user, toast);
+
+      console.log(userAuth);
+
+      if(userResponse != null){
+         setUserAuth(userResponse);
+         router.push('/');
+      }
+      
    }
 
    return (
