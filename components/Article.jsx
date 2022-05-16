@@ -44,11 +44,11 @@ export default function Article() {
                 </HStack>
                 <HStack>
                     <Text paddingRight={580}>Autor:</Text>
-                    <Link><BiLike/></Link>
+                    <Link href="#" ><BiLike/></Link>
                     <Text>{data.likes}</Text>
-                    <Link><BiDislike/></Link>
+                    <Link href="#"><BiDislike/></Link>
                     <Text>{data.dislikes}</Text>
-                    <Link><FiFlag/></Link>
+                    <Link href="#"><FiFlag/></Link>
                 </HStack>
                 <Text  align="justify" padding={14}>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{data.contents}
