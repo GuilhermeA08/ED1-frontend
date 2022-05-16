@@ -1,9 +1,11 @@
+import { Flex } from '@chakra-ui/react';
+
+import ArticleCard from '../components/ArticleCard';
 
 export default function Home() {
-   return (
-      <>
-         <h1>Olá</h1>
-      </>
-
-   )
+  return (
+    <Flex align="center" justify="center" p={20}>
+      <ArticleCard />
+    </Flex>
+  );
 }
