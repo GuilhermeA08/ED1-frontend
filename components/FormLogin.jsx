@@ -1,49 +1,41 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useRouter } from 'next/router'
 import { Stack, Heading, Input, Button, FormControl, FormLabel, FormErrorMessage, useToast } from '@chakra-ui/react';
 
-import { userRegister } from '../services/userService';
+import { login } from '../services/userService';
+import { UserContext } from '../contexts/userContext';
 
 const initialuser = {
-   name: '',
    email: '',
-   password: '',
+   password: ''
 }
 
-export default function FormRegisterUser() {
+export default function Login() {
+   const router = useRouter();
    const [user, setUser] = useState(initialuser);
-   const [isErrorName, setErrorName] = useState(false);
    const [isErrorEmail, setErrorEmail] = useState(false);
    const [isErrorPassword, setErrorPassword] = useState(false);
    const toast = useToast();
+   const { userAuth, setUserAuth } = useContext(UserContext);
 
-   function handleRegisterUser() {
-      user.name === '' && setErrorName(true);
+   async function handleLoginUser() {
       user.email === '' && setErrorEmail(true);
-      user.password === '' && setErrorPassword(true)
+      user.password === '' && setErrorPassword(true);
 
-      console.log(user);
-      userRegister(user, toast);
+      const userResponse = await login(user, toast);
+
+      console.log(userAuth);
+
+      if(userResponse != null){
+         setUserAuth(userResponse);
+         router.push('/');
+      }
+      
    }
 
    return (
       <Stack margin="10" spacing="5">
-         <Heading color="#43A6BC" align="center">Cadastro de usuários</Heading>
-
-         <FormControl isInvalid={isErrorName} align="center">
-            <FormLabel htmlFor='name'>Nome</FormLabel>
-            <Input
-               id='name'
-               type='name'
-               value={user.name}
-               onChange={(e) => {
-                  setUser(prevState => {
-                     return { ...prevState, name: e.target.value }
-                  });
-                  setErrorName(false);
-               }}
-            />
-            {isErrorName && (<FormErrorMessage>O nome é obrigatório</FormErrorMessage>)}
-         </FormControl>
+         <Heading color="#43A6BC" align="center">Login</Heading>
 
          <FormControl isInvalid={isErrorEmail} align="center">
             <FormLabel htmlFor='email'>E-mail</FormLabel>
@@ -77,7 +69,7 @@ export default function FormRegisterUser() {
             {isErrorPassword && (<FormErrorMessage>A senha é obrigatória</FormErrorMessage>)}
          </FormControl>
 
-         <Button isLoading={false} backgroundColor="#B2DDE6" onClick={handleRegisterUser}>Cadastrar</Button>
+         <Button isLoading={false} backgroundColor="#B2DDE6" onClick={handleLoginUser}>Entrar</Button>
       </Stack>
    );
 }

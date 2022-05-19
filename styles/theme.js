@@ -6,7 +6,11 @@ const theme = extendTheme({
     global: (props) => ({
       body: {
         bg: mode("#F2F2F2","#415E64")(props),
-      }
+      //   height: "100vh",
+      },
+      // '#__next': {
+      //    height: "100vh",
+      // }
     })
   },
 });
