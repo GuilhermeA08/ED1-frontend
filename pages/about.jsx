@@ -39,6 +39,7 @@ export default function about() {
                             src='edphoto.png'
                             alt='colaborador 1'
                         ></Image>
+                        <Text>Edmundo Vitor</Text>
                     </Box>
                     <Spacer />
                     <Box>
@@ -48,6 +49,7 @@ export default function about() {
                             src='gaphoto.png'
                             alt='colaborador 2'
                         ></Image>
+                        <Text>Guilherme Augusto</Text>
                     </Box>
                     <Spacer />
                     <Box>
@@ -57,6 +59,7 @@ export default function about() {
                             src='paphoto.png'
                             alt='colaborador 3'
                         ></Image>
+                        <Text>Paulo Vitor</Text>
                     </Box>
                     <Spacer />
                     <Box>
@@ -66,6 +69,7 @@ export default function about() {
                             src='ryphoto.png'
                             alt='colaborador 4'
                         ></Image>
+                        <Text>Ruslan Gomes</Text>
                     </Box>
                     <Spacer />
                 </Flex>
