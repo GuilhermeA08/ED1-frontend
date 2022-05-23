@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Flex, Stack, Image, Button, Box } from '@chakra-ui/react';
 
-import Link from '../components/Link';
+import Link from './Link';
 
 import articleLogo from '../public/article-logo.svg';
 import userPhoto from '../public/user-photo.svg';
