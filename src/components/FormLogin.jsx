@@ -1,9 +1,8 @@
-import { useState, useContext } from 'react';
-import { useRouter } from 'next/router'
+import { useState, useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Stack, Heading, Input, Button, FormControl, FormLabel, FormErrorMessage, useToast } from '@chakra-ui/react';
 
-import { login } from '../services/userService';
-import { UserContext } from '../contexts/userContext';
+import { Context } from '../contexts/AuthContext';
 
 const initialuser = {
    email: '',
@@ -12,25 +11,25 @@ const initialuser = {
 
 export default function Login() {
    const router = useRouter();
+
    const [user, setUser] = useState(initialuser);
    const [isErrorEmail, setErrorEmail] = useState(false);
    const [isErrorPassword, setErrorPassword] = useState(false);
    const toast = useToast();
-   const { userAuth, setUserAuth } = useContext(UserContext);
 
-   async function handleLoginUser() {
+   const { handleAuthenticate, userAuth, loading } = useContext(Context);
+
+   useEffect(() => {
+      if(userAuth.token != null){
+         router.push('/');
+      }
+   }, [loading]);
+
+   async function handleLogin() {
       user.email === '' && setErrorEmail(true);
       user.password === '' && setErrorPassword(true);
 
-      const userResponse = await login(user, toast);
-
-      console.log(userAuth);
-
-      if(userResponse != null){
-         setUserAuth(userResponse);
-         router.push('/');
-      }
-      
+      await handleAuthenticate(user, toast);
    }
 
    return (
@@ -69,7 +68,7 @@ export default function Login() {
             {isErrorPassword && (<FormErrorMessage>A senha é obrigatória</FormErrorMessage>)}
          </FormControl>
 
-         <Button isLoading={false} backgroundColor="#B2DDE6" onClick={handleLoginUser}>Entrar</Button>
+         <Button isLoading={false} backgroundColor="#B2DDE6" onClick={handleLogin}>Entrar</Button>
       </Stack>
    );
 }

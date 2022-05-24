@@ -1,15 +1,16 @@
 import { useContext } from 'react';
-import { Flex, Stack, Image, Button, Box } from '@chakra-ui/react';
+import { Flex, Stack, Image, Button, Box, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 
 import Link from './Link';
 
-import articleLogo from '../public/article-logo.svg';
-import userPhoto from '../public/user-photo.svg';
+import articleLogo from '../../public/article-logo.svg';
+import userPhoto from '../../public/user-photo.svg';
+import logoutIcon from "../../public/logout.svg";
 
-import { UserContext } from '../contexts/userContext';
+import { Context } from '../contexts/AuthContext';
 
 export default function MenuBar() {
-   const { userAuth } = useContext(UserContext);
+   const { userAuth, handleLogout } = useContext(Context);
 
    return (
       <Flex 
@@ -37,7 +38,7 @@ export default function MenuBar() {
          </Stack>
 
       {
-         userAuth.email != '' ?
+         userAuth.token != null ?
          (
             <Stack 
                direction='row' 
@@ -47,17 +48,33 @@ export default function MenuBar() {
             >
                <Link href='/create' color='#fff'>Criar</Link>
 
-               <Box 
-                  backgroundColor='#fff'
-                  padding={2}
-                  borderRadius={20}
-               >
-                  <Image
-                     src={userPhoto.src}
-                     width={6}
-                     onClick={()=> console.log("clicou")}
-                  />
-               </Box>
+               <Menu width='100px'>
+                  <MenuButton
+                     backgroundColor='#fff'
+                     padding={2}
+                     borderRadius='full' 
+                  >
+                     <Image
+                        src={userPhoto.src}
+                        width={6}
+                     />
+                  </MenuButton>
+
+                  <MenuList minWidth='100%'>
+                     <MenuItem 
+                        minH='30px'
+                        onClick={handleLogout}
+                     >
+                        <Image
+                           src={logoutIcon.src}
+                           width={5}
+                           pr={2}
+                        />
+                        Sair
+                     </MenuItem>
+                  </MenuList>
+               </Menu>
+
             </Stack>
          )
          :

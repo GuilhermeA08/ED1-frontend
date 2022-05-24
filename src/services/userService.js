@@ -12,33 +12,14 @@ export async function userRegister(user, toast) {
          duration: 9000,
          isClosable: true,
          position: 'top'
-       })
+      });
    });
 }
 
 export async function login(user, toast) {
-   return await axios.get('/users').then((response) => {
-      const users = response.data;
-      let userAuth = null;
-
-      users.forEach((userDB) => {
-         if(userDB.email == user.email) {
-            userAuth = userDB;
-         }
-      });
-    
-      if(userAuth) {
-         return userAuth;
-
-      }else{
-         toast({
-            title: 'Error',
-            description: 'Incorrect email or password',
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-            position: 'top'
-          })
-      }
+   return await axios.post('/login', user).then(response => {
+      return response;
+   }).catch(error => {
+      return error.response;
    });
 }
