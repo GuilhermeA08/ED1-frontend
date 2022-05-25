@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { HStack, Stack, Heading, Box, Text, Link , useToast} from '@chakra-ui/react';
@@ -6,8 +5,6 @@ import { BiLike, BiDislike } from "react-icons/bi";
 import { FiFlag } from "react-icons/fi";
 
 import { findArticlesById } from "../services/articleService";
-
-const url = "http://localhost:8080/api/v1/articles/"
 
 export default function Article() {
    const router = useRouter();
@@ -39,7 +36,7 @@ export default function Article() {
 
    return (
       <Stack>
-         <Box key={data.id} boxShadow='lg' borderWidth='1px' borderRadius='20' backgroundColor="#FFF" padding='8' w='800px'>
+         <Box key={data.id} boxShadow='lg' borderWidth='1px' borderRadius='20' backgroundColor="#FFF" padding='8' maxWidth='1000px' minWidth='500px'>
             <HStack justify='space-between' paddingBottom={2}>
                <Heading>
                   {data.title}

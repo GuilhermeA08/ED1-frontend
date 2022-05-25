@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { useRouter } from 'next/router'
-import axios from "axios";
+import axios from "../config/axios";
 import jwt from "jsonwebtoken";
 
 import { login } from "../services/userService";

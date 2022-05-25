@@ -46,7 +46,7 @@ export default function MenuBar() {
                align='center'
                mr={5}
             >
-               <Link href='/create' color='#fff'>Criar</Link>
+               <Link href='/write_article' color='#fff'>Criar</Link>
 
                <Menu width='100px'>
                   <MenuButton

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { Stack, Heading, Box, Text, Flex } from '@chakra-ui/react';
-import Link from "./Link";
 
 import { useRouter } from 'next/router'
 
@@ -28,9 +27,7 @@ export default function Card() {
             <Flex key={item.id} onClick={() => handleOpenArticle(item)}>
                <Box boxShadow='lg' borderWidth='1px' borderRadius='20' backgroundColor="#FFF" padding='8' w='800px'>
                   <Heading as='h3' size='lg' align="center" paddingBottom={5}>
-                     {/* <Link href={{ pathname: "/article", query: { id: item.id } }}> */}
                         {item.title}
-                     {/* </Link> */}
                   </Heading>
                   <Text>
                      {item.contents}
