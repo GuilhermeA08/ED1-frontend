@@ -29,9 +29,20 @@ export default function Card() {
                   <Heading as='h3' size='lg' align="center" paddingBottom={5}>
                         {item.title}
                   </Heading>
-                  <Text>
-                     {item.contents}
-                  </Text>
+
+                  {item.contents.split("\n").map((paragraph, index) => {
+                     return(
+                        <Text 
+                           key={index}
+                           textAlign="justify"
+                           style={{textIndent: '50px'}}
+                        >
+                           {paragraph}
+                        </Text>
+                     )
+                  })}
+
+                  
                   <Text align="end" paddingTop='5' color="gray">
                      {new Intl.DateTimeFormat('en-US', {
                         day: '2-digit',

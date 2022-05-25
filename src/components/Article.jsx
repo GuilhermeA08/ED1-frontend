@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { HStack, Stack, Heading, Box, Text, Link , useToast} from '@chakra-ui/react';
+import { HStack, Stack, Heading, Box, Text, Link, useToast, VStack } from '@chakra-ui/react';
 import { BiLike, BiDislike } from "react-icons/bi";
 import { FiFlag } from "react-icons/fi";
 
@@ -18,9 +18,9 @@ export default function Article() {
          if (query.id != null) {
             const articlesResponse = await findArticlesById(query.id);
 
-            if(articlesResponse.status == 200) {
+            if (articlesResponse.status == 200) {
                setData(articlesResponse.data);
-            }else{
+            } else {
                toast({
                   title: 'Error',
                   description: articlesResponse.data.message,
@@ -36,22 +36,36 @@ export default function Article() {
 
    return (
       <Stack>
-         <Box key={data.id} boxShadow='lg' borderWidth='1px' borderRadius='20' backgroundColor="#FFF" padding='8' maxWidth='1000px' minWidth='500px'>
-            <HStack justify='space-between' paddingBottom={2}>
+         <Box
+            key={data.id}
+            boxShadow='lg'
+            borderWidth='1px'
+            borderRadius='20'
+            backgroundColor="#FFF"
+            padding='8'
+            maxWidth='1000px'
+            minWidth='500px'
+         >
+            <HStack justify='space-between'>
                <Heading>
                   {data.title}
                </Heading>
-               <Text paddingTop='5'>Publicado em:&nbsp;
-                  {new Intl.DateTimeFormat('en-US', {
-                     day: '2-digit',
-                     month: '2-digit',
-                     year: 'numeric'
-                  }
-                  ).format(data.createdAt)}
-               </Text>
             </HStack>
-            <HStack justify="space-between">
-               <Text>Autor: {data.user != null && data.user.name}</Text>
+
+            <HStack justify="space-between" mt={5}>
+               <VStack align="flex-start">
+                  <Text>Autor: {data.user != null && data.user.name}</Text>
+
+                  <Text minWidth='20%'>
+                     Publicado em:&nbsp;
+                     {new Intl.DateTimeFormat('en-US', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                     }
+                     ).format(data.createdAt)}
+                  </Text>
+               </VStack>
 
                <HStack spacing={3}>
                   <Link href="#" ><BiLike size={25} /></Link>
@@ -61,9 +75,20 @@ export default function Article() {
                   <Link href="#"><FiFlag size={25} /></Link>
                </HStack>
             </HStack>
-            <Text align="justify" padding={14}>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{data.contents}
-            </Text>
+
+            <Stack p={10}>
+               {data.contents != null && data.contents.split("\n").map((paragraph, index) => {
+                  return (
+                     <Text
+                        key={index}
+                        textAlign="justify"
+                        style={{ textIndent: '50px' }}
+                     >
+                        {paragraph}
+                     </Text>
+                  );
+               })}
+            </Stack>
          </Box>
       </Stack>
    );

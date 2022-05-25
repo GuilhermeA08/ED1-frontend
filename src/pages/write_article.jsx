@@ -72,14 +72,12 @@ export default function Create() {
                      color="#43A6BC"
                      fontWeight={900}
                   >
-                     Title
+                     Título
                   </FormLabel>
 
                   <Input
                      id='title'
                      type='text'
-                     placeholder="Title"
-                     textAlign="center"
                      backgroundColor='#FFF'
                      value={article.title}
                      onChange={(e) => {
@@ -99,7 +97,7 @@ export default function Create() {
                      fontWeight={900}
                      disabled
                   >
-                     Category
+                     Categorias
                   </FormLabel>
 
                   <Input
@@ -130,7 +128,7 @@ export default function Create() {
                      color="#43A6BC"
                      fontWeight={900}
                   >
-                     Article
+                     Artigo
                   </FormLabel>
 
                   <Textarea
@@ -139,13 +137,19 @@ export default function Create() {
                      backgroundColor='#FFF'
                      resize="none"
                      overflow="hidden"
+                     p={5}
+                     textAlign="justify"
+                     style={{textIndent: "50px"}}
                      rows={rows}
                      value={article.contents}
                      onChange={(e) => {
                         setArticle(prevState => {
                            return { ...prevState, contents: e.target.value }
                         });
-                        setErrorContents(false);
+
+                        if(e.target.value != ""){
+                           setErrorContents(false);
+                        }
                      }}
                      onInput={(e) => {
                         if(e.target.scrollHeight > e.target.offsetHeight) {
