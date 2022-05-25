@@ -23,14 +23,14 @@ export default function Card() {
    }
 
    return (
-      <Stack spacing="5">
+      <Stack spacing="5" cursor="pointer">
          {articles.map((item) =>
-            <Flex onClick={() => handleOpenArticle(item)}>
-               <Box key={item.id} boxShadow='lg' borderWidth='1px' borderRadius='20' backgroundColor="#FFF" padding='8' w='800px'>
+            <Flex key={item.id} onClick={() => handleOpenArticle(item)}>
+               <Box boxShadow='lg' borderWidth='1px' borderRadius='20' backgroundColor="#FFF" padding='8' w='800px'>
                   <Heading as='h3' size='lg' align="center" paddingBottom={5}>
-                     <Link href={{ pathname: "/article", query: { id: item.id } }}>
-                        {item.attachment}
-                     </Link>
+                     {/* <Link href={{ pathname: "/article", query: { id: item.id } }}> */}
+                        {item.title}
+                     {/* </Link> */}
                   </Heading>
                   <Text>
                      {item.contents}

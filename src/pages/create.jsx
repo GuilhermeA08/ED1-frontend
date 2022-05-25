@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Stack, FormControl, FormLabel, Input, Textarea, Button, FormErrorMessage } from "@chakra-ui/react";
 
-import { UserContext } from "../contexts/userContext";
+import { Context } from "../contexts/AuthContext";
 import { createArticle } from "../services/articleService";
 
 const initialArticle = {
@@ -13,7 +13,7 @@ const initialArticle = {
 }
 
 export default function Create() {
-   const { userAuth } = useContext(UserContext);
+   const { userAuth } = useContext(Context);
    const [article, setArticle] = useState(initialArticle);
    const [isErrorTitle, setErrorTitle] = useState(false);
    const [isErrorContents, setErrorContents] = useState(false);
