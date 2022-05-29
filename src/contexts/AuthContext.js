@@ -24,6 +24,7 @@ function AuthProvider({ children }) {
 
          // Verifica se o token ta expirado
          if(new Date() > new Date(jwtDecoded.exp * 1000)){
+            // setUserAuth({});
             localStorage.removeItem('user');
             axios.defaults.headers.Authorization = undefined;
             router.push('/login');
@@ -54,6 +55,9 @@ function AuthProvider({ children }) {
       // Verifica se fez o login corretamente
       if(status == 200){
          setUserAuth(data);
+
+         console.log("Context:")
+         console.log(data);
 
          // Seta o token para todas as requisições
          axios.defaults.headers.Authorization = `Bearer ${data.token}`;

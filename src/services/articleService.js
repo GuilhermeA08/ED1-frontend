@@ -2,10 +2,8 @@ import axios from "../config/axios";
 
 export async function createArticle(article) {
    return await axios.post("/articles", article).then(response => {
-      console.log(response);
       return response;
    }).catch(error => {
-      console.log(error);
       return error.response;
    });
 }
