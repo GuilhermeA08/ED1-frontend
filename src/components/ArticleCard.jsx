@@ -4,7 +4,7 @@ import { Stack, Heading, Box, Text, Flex } from '@chakra-ui/react';
 
 import { useRouter } from 'next/router'
 
-const url = "http://localhost:8080/api/v1/articles/"
+const url = process.env.NEXT_PUBLIC_API_URL + "/articles";
 
 export default function Card() {
    const router = useRouter();
@@ -13,6 +13,7 @@ export default function Card() {
    useEffect(() => {
       axios.get(url)
          .then(res => {
+            console.log(res);
             setArticles(res.data)
          }).catch(err => console.error(err))
    }, []);
