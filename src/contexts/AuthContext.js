@@ -17,16 +17,17 @@ function AuthProvider({ children }) {
       const user = localStorage.getItem('user');
 
       // Verifica se existe o usuário no localStorage
-      if(user) {
+      if (user) {
          // pega o token do usuário
          const jwtToken = JSON.parse(user).token;
          let jwtDecoded = jwt.decode(jwtToken);
 
          // Verifica se o token ta expirado
-         if(new Date() > new Date(jwtDecoded.exp * 1000)){
-            // setUserAuth({});
+         if (new Date() > new Date(jwtDecoded.exp * 1000)) {
             localStorage.removeItem('user');
             axios.defaults.headers.Authorization = undefined;
+            setUserAuth({});
+
             router.push('/login');
          }
 
@@ -41,7 +42,7 @@ function AuthProvider({ children }) {
       // Faz o login
       const { status, data } = await login(user);
 
-      if(status != 200){
+      if (status != 200) {
          toast({
             title: 'Error',
             description: data.message,
@@ -53,7 +54,7 @@ function AuthProvider({ children }) {
       }
 
       // Verifica se fez o login corretamente
-      if(status == 200){
+      if (status == 200) {
          setUserAuth(data);
 
          console.log("Context:")
@@ -76,7 +77,7 @@ function AuthProvider({ children }) {
       router.push('/');
    }
 
-   return(
+   return (
       <Context.Provider value={{
          loading,
          userAuth,
