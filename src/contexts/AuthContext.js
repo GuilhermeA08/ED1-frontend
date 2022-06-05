@@ -29,10 +29,10 @@ function AuthProvider({ children }) {
             setUserAuth({});
 
             router.push('/login');
+         } else {
+            axios.defaults.headers.Authorization = `Bearer ${jwtToken}`;
+            setUserAuth(JSON.parse(user));
          }
-
-         axios.defaults.headers.Authorization = `Bearer ${jwtToken}`;
-         setUserAuth(JSON.parse(user));
       }
 
       setLoading(false);

@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { Stack, FormControl, FormLabel, Input, Textarea, Button, FormErrorMessage, Box, Flex, useToast } from "@chakra-ui/react";
+import FilePicker from "chakra-ui-file-picker";
 
 import { Context } from "../contexts/AuthContext";
 import { createArticle } from "../services/articleService";
@@ -18,6 +19,7 @@ export default function Create() {
    const router = useRouter();
    const toast = useToast();
 
+   const attachmentRef = useRef();
    const [rows, setRows] = useState(2);
    const [article, setArticle] = useState(initialArticle);
    const [isErrorTitle, setErrorTitle] = useState(false);
@@ -33,9 +35,9 @@ export default function Create() {
          return { ...prevState, user: userId }
       });
 
-      const response = await createArticle({...article, user: userId});
+      const response = await createArticle({ ...article, user: userId }, attachmentRef);
 
-      if(response.status == 201){
+      if (response.status == 201) {
          router.push(`/article?id=${response.data.id}`)
       } else {
          toast({
@@ -60,10 +62,10 @@ export default function Create() {
             padding='8'
             w='800px'
          >
-            <Stack 
-               direction='column' 
-               margin={10} 
-               spacing={10} 
+            <Stack
+               direction='column'
+               margin={10}
+               spacing={10}
                align="center"
             >
                <FormControl isInvalid={isErrorTitle} align="center">
@@ -117,9 +119,9 @@ export default function Create() {
                </FormControl>
             </Stack>
 
-            <Stack 
-               margin={10} 
-               spacing={20} 
+            <Stack
+               margin={10}
+               spacing={20}
                align="center"
             >
                <FormControl isInvalid={isErrorContents} align="center">
@@ -139,7 +141,7 @@ export default function Create() {
                      overflow="hidden"
                      p={5}
                      textAlign="justify"
-                     style={{textIndent: "50px"}}
+                     style={{ textIndent: "50px" }}
                      rows={rows}
                      value={article.contents}
                      onChange={(e) => {
@@ -147,12 +149,12 @@ export default function Create() {
                            return { ...prevState, contents: e.target.value }
                         });
 
-                        if(e.target.value != ""){
+                        if (e.target.value != "") {
                            setErrorContents(false);
                         }
                      }}
                      onInput={(e) => {
-                        if(e.target.scrollHeight > e.target.offsetHeight) {
+                        if (e.target.scrollHeight > e.target.offsetHeight) {
                            setRows(prevState => {
                               return prevState + 1;
                            })
@@ -160,6 +162,28 @@ export default function Create() {
                      }}
                   />
                   {isErrorContents && (<FormErrorMessage>Contents is required</FormErrorMessage>)}
+               </FormControl>
+
+
+               <FormControl align="center">
+                  <FormLabel
+                     htmlFor='contents'
+                     color="#43A6BC"
+                     fontWeight={900}
+                  >
+                     Anexo
+                  </FormLabel>
+
+                  <FilePicker
+                     onFileChange={(file) => { console.log(attachmentRef) }}
+                     placeholder="Anexo"
+                     clearButtonLabel="Remover"
+                     multipleFiles={false}
+                     accept="*"
+                     hideClearButton={false}
+                     inputProps={{ cursor: "pointer" }}
+                     ref={attachmentRef}
+                  />
                </FormControl>
 
                <Button
