@@ -34,6 +34,17 @@ export default function Article() {
       })();
    }, [query]);
 
+   async function handleDownloadAttachment(url) {
+      fetch(url)
+         .then(response => response.blob())
+         .then(blob => {
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "anexo";
+            link.click();
+      }).catch(console.error);
+   }
+
    return (
       <Stack>
          <Box
@@ -65,6 +76,15 @@ export default function Article() {
                      }
                      ).format(data.createdAt)}
                   </Text>
+
+                  {
+                     data.attachment != null &&
+                     (
+                        <Text>
+                           Anexo: <Link onClick={() => handleDownloadAttachment(data.attachment.downloadUri)} >arquivo.{data.attachment.type}</Link>
+                        </Text>
+                     )
+                  }
                </VStack>
 
                <HStack spacing={3}>

@@ -32,3 +32,11 @@ export async function findArticlesById(id) {
       return error.response;
    });
 }
+
+export async function downloadAttachment(url) {
+   return await axios.get(url, { headers: { 'Content-Disposition': 'attachment' } }).then(response => {
+      return response;
+   }).catch(error => {
+      return error.response;
+   })
+}
