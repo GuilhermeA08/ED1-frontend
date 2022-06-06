@@ -1,12 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { HStack, Stack, Heading, Box, Text, Link, useToast, VStack } from '@chakra-ui/react';
-import { BiLike, BiDislike } from "react-icons/bi";
-import { FiFlag, FiEdit } from "react-icons/fi";
+// import { BiLike, BiDislike } from "react-icons/bi";
+import { FiFlag, FiEdit, FiDelete } from "react-icons/fi";
 
-import write_article from "../pages/write_article";
 import { Context } from "../contexts/AuthContext";
-import { findArticlesById } from "../services/articleService";
+import { findArticlesById, deleteArticle } from "../services/articleService";
 
 export default function Article() {
    const router = useRouter();
@@ -46,6 +45,45 @@ export default function Article() {
             link.download = "anexo";
             link.click();
          }).catch(console.error);
+   }
+
+   async function handleDeleteArticle(id) {
+      const response = await deleteArticle(id);
+
+      if (response.status == 204) {
+         toast({
+            title: 'Sucesso',
+            description: "Artigo deletado com sucesso!",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+            position: 'top'
+         });
+
+         router.push("/");
+
+      } else if (response.status == 403) {
+         toast({
+            title: 'Error',
+            description: response.data.message,
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+            position: 'top'
+         });
+
+         router.push("/login")
+
+      } else {
+         toast({
+            title: 'Error',
+            description: response.data.message,
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+            position: 'top'
+         });
+      }
    }
 
    return (
@@ -91,16 +129,20 @@ export default function Article() {
                </VStack>
 
                <HStack spacing={3}>
-                  <Link href="#" ><BiLike size={25} /></Link>
-                  {/* <Text>{data.likes}</Text> */}
+
+                  {/* <Link href="#" ><BiLike size={25} /></Link>
+                  <Text>{data.likes}</Text> 
                   <Link href="#"><BiDislike size={25} /></Link>
-                  {/* <Text>{data.dislikes}</Text> */}
-                  <Link href="#"><FiFlag size={25} /></Link>
+                  <Text>{data.dislikes}</Text>
+                  <Link href="#"><FiFlag size={25} /></Link> */}
 
                   {
                      data.user != null && (
                         userAuth.id == data.user.id && (
-                           <Link href={`/write_article?edit=${data.id}`}><FiEdit size={25} /></Link>
+                           <>
+                              <Link href={`/write_article?edit=${data.id}`}><FiEdit size={25} /></Link>
+                              <Link onClick={() => handleDeleteArticle(data.id)}><FiDelete size={26} /></Link>
+                           </>
                         )
                      )
                   }

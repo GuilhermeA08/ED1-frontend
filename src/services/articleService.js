@@ -56,3 +56,11 @@ export async function downloadAttachment(url) {
       return error.response;
    })
 }
+
+export async function deleteArticle(id) {
+   return await axios.delete("/articles/" + id).then(response => {
+      return response;
+   }).catch(error => {
+      return error.response;
+   })
+}

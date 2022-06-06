@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from "next/router";
 import { Stack, Heading, Input, Button, FormControl, FormLabel, FormErrorMessage, useToast } from '@chakra-ui/react';
 
 import { userRegister } from '../services/userService';
@@ -10,19 +11,44 @@ const initialuser = {
 }
 
 export default function FormRegisterUser() {
+   const router = useRouter();
+
    const [user, setUser] = useState(initialuser);
    const [isErrorName, setErrorName] = useState(false);
    const [isErrorEmail, setErrorEmail] = useState(false);
    const [isErrorPassword, setErrorPassword] = useState(false);
    const toast = useToast();
 
-   function handleRegisterUser() {
+
+   async function handleRegisterUser() {
       user.name === '' && setErrorName(true);
       user.email === '' && setErrorEmail(true);
       user.password === '' && setErrorPassword(true)
 
-      console.log(user);
-      userRegister(user, toast);
+      const response = await userRegister(user, toast);
+
+      if (response.status == 201) {
+         toast({
+            title: 'Sucesso',
+            description: "Usuário cadastrado com sucesso",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+            position: 'top'
+         });
+
+         router.push("/login");
+
+      } else {
+         toast({
+            title: 'Error',
+            description: response.data.message,
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+            position: 'top'
+         });
+      }
    }
 
    return (

@@ -1,16 +1,11 @@
 import axios from "../config/axios";
 
-export async function userRegister(user, toast) {
-   await axios.post('/users', user).then((response) => {
+export async function userRegister(user) {
+   return await axios.post('/users', user).then((response) => {
+      console.log(response);
+      return response;
    }).catch((error) => {
-      toast({
-         title: 'Error',
-         description: error.response.data.message,
-         status: 'error',
-         duration: 9000,
-         isClosable: true,
-         position: 'top'
-      });
+      return error.response;
    });
 }
 
