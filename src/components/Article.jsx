@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { HStack, Stack, Heading, Box, Text, Link, useToast, VStack } from '@chakra-ui/react';
 import { BiLike, BiDislike } from "react-icons/bi";
-import { FiFlag } from "react-icons/fi";
+import { FiFlag, FiEdit } from "react-icons/fi";
 
+import write_article from "../pages/write_article";
+import { Context } from "../contexts/AuthContext";
 import { findArticlesById } from "../services/articleService";
 
 export default function Article() {
@@ -12,6 +14,7 @@ export default function Article() {
    const toast = useToast();
 
    const [data, setData] = useState({});
+   const { userAuth } = useContext(Context);
 
    useEffect(() => {
       (async () => {
@@ -42,7 +45,7 @@ export default function Article() {
             link.href = URL.createObjectURL(blob);
             link.download = "anexo";
             link.click();
-      }).catch(console.error);
+         }).catch(console.error);
    }
 
    return (
@@ -89,10 +92,19 @@ export default function Article() {
 
                <HStack spacing={3}>
                   <Link href="#" ><BiLike size={25} /></Link>
-                  <Text>{data.likes}</Text>
+                  {/* <Text>{data.likes}</Text> */}
                   <Link href="#"><BiDislike size={25} /></Link>
-                  <Text>{data.dislikes}</Text>
+                  {/* <Text>{data.dislikes}</Text> */}
                   <Link href="#"><FiFlag size={25} /></Link>
+
+                  {
+                     data.user != null && (
+                        userAuth.id == data.user.id && (
+                           <Link href={`/write_article?edit=${data.id}`}><FiEdit size={25} /></Link>
+                        )
+                     )
+                  }
+
                </HStack>
             </HStack>
 
@@ -110,6 +122,6 @@ export default function Article() {
                })}
             </Stack>
          </Box>
-      </Stack>
+      </Stack >
    );
 }
