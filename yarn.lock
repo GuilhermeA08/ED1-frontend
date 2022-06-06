@@ -1088,6 +1088,11 @@
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001338.tgz"
   "version" "1.0.30001338"
 
+"chakra-ui-file-picker@^0.2.0":
+  "integrity" "sha512-4keap7EkiorCMV/FomunmvUJRUtNtPjAyL4jOhuaiISM0D9P2dGoZfOPRyVDvt1y9vhsmebUu3DTwEwCDDS3hw=="
+  "resolved" "https://registry.npmjs.org/chakra-ui-file-picker/-/chakra-ui-file-picker-0.2.0.tgz"
+  "version" "0.2.0"
+
 "chalk@^2.0.0":
   "integrity" "sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ=="
   "resolved" "https://registry.npmjs.org/chalk/-/chalk-2.4.2.tgz"
